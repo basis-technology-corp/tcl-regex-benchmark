@@ -10,6 +10,4 @@ release.properties
 *~
 .idea
 *.iml
-
-
-
+classpath.txt
