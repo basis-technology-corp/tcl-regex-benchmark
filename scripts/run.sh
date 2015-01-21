@@ -6,5 +6,5 @@ shift
 shift
 shift
 mvn clean install -Ptclre-$ver
-java -cp `cat classpath.txt` com.basistech.tclrebenchmark.BenchmarkDriver $op $text "$@"
+java -cp `cat classpath.txt`:target/classes com.basistech.tclrebenchmark.BenchmarkDriver $op $text "$@"
 

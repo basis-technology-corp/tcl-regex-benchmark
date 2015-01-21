@@ -34,23 +34,27 @@ public class FindBenchmark {
     private final Timer responses = metrics.timer("find");
     private final List<RePattern> patterns;
     private final String text;
+    private final int count;
     private ConsoleReporter reporter;
 
 
-    public FindBenchmark(List<RePattern> patterns, String text) {
+    public FindBenchmark(List<RePattern> patterns, String text, int count) {
         this.patterns = patterns;
         this.text = text;
+        this.count = count;
     }
 
     public void run() {
         startReport();
-        for (RePattern pattern : patterns) {
-            ReMatcher matcher = pattern.matcher(text);
-            final Timer.Context context = responses.time();
-            try {
-                matcher.find();
-            } finally {
-                context.stop();
+        for (int x = 0; x < count; x++) {
+            for (RePattern pattern : patterns) {
+                ReMatcher matcher = pattern.matcher(text);
+                final Timer.Context context = responses.time();
+                try {
+                    matcher.find();
+                } finally {
+                    context.stop();
+                }
             }
         }
         stopReport();
