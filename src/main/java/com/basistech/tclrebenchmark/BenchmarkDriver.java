@@ -114,6 +114,6 @@ public class BenchmarkDriver {
     }
 
     private void doFind() {
-        new FindBenchmark(patterns, textContent, 1000).run();
+        new FindBenchmark(patterns, textContent, 10).run();
     }
 }

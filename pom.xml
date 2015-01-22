@@ -146,5 +146,8 @@
                 <tcl-regex.version>0.10.3</tcl-regex.version>
             </properties>
         </profile>
+        <profile>
+            <id>tclre-cur</id>
+        </profile>
     </profiles>
 </project>
