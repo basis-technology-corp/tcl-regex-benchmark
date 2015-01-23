@@ -35,7 +35,8 @@ import java.util.List;
 public class BenchmarkDriver {
 
     enum Task {
-        find
+        find,
+        lookingAt
     }
 
     @Argument(required = true)
@@ -86,6 +87,8 @@ public class BenchmarkDriver {
         switch (task) {
         case find:
             doFind();
+        case lookingAt:
+            doLookingAt();
         default:
             break;
         }
@@ -115,5 +118,9 @@ public class BenchmarkDriver {
 
     private void doFind() {
         new FindBenchmark(patterns, textContent, 10).run();
+    }
+
+    private void doLookingAt() {
+        new LookingAtBenchmark(patterns, textContent, 10).run();
     }
 }
