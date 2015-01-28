@@ -36,7 +36,8 @@ public class BenchmarkDriver {
 
     enum Task {
         find,
-        lookingAt
+        lookingAt,
+        compile
     }
 
     @Argument(required = true)
@@ -89,9 +90,15 @@ public class BenchmarkDriver {
             doFind();
         case lookingAt:
             doLookingAt();
+        case compile:
+            doCompile();
         default:
             break;
         }
+    }
+
+    private void doCompile() {
+        new CompileBenchmark(patterns, textContent, 1000).run();
     }
 
     private void setupInputs() throws IOException, RegexException {
