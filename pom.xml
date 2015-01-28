@@ -152,6 +152,12 @@
             </properties>
         </profile>
         <profile>
+            <id>tclre-0.11.0</id>
+            <properties>
+                <tcl-regex.version>0.10.3</tcl-regex.version>
+            </properties>
+        </profile>
+        <profile>
             <id>tclre-cur</id>
         </profile>
     </profiles>

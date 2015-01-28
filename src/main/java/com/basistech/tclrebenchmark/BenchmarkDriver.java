@@ -88,10 +88,13 @@ public class BenchmarkDriver {
         switch (task) {
         case find:
             doFind();
+            break;
         case lookingAt:
             doLookingAt();
+            break;
         case compile:
             doCompile();
+            break;
         default:
             break;
         }

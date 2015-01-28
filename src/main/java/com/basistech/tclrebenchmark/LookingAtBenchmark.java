@@ -17,8 +17,10 @@ package com.basistech.tclrebenchmark;
 import com.basistech.tclre.ReMatcher;
 import com.basistech.tclre.RePattern;
 import com.codahale.metrics.ConsoleReporter;
+import com.codahale.metrics.Histogram;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
+import org.mpierce.metrics.reservoir.hdrhistogram.HdrHistogramReservoir;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +33,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class LookingAtBenchmark {
     private final MetricRegistry metrics = new MetricRegistry();
-    private final Timer responses = metrics.timer("lookingAt");
+    private final Histogram times = new Histogram(new HdrHistogramReservoir());
     private final List<RePattern> patterns;
     private final String text;
     private final int count;
@@ -42,6 +44,7 @@ public class LookingAtBenchmark {
         this.patterns = patterns;
         this.text = text;
         this.count = count;
+        metrics.register("lookingAt", times);
     }
 
     public void run() {
@@ -52,11 +55,12 @@ public class LookingAtBenchmark {
                 for (int start = 0; start < text.length() - 100; start += 100) {
                     int end = Math.min(text.length(), start + 100);
                     matcher.region(start, end);
-                    final Timer.Context context = responses.time();
+                    long startTime = System.nanoTime();
                     try {
                         matcher.lookingAt();
                     } finally {
-                        context.stop();
+                        long time = System.nanoTime() - startTime;
+                        times.update(time);
                     }
                 }
             }
