@@ -131,6 +131,8 @@ public class BenchmarkDriver {
     }
 
     private void doLookingAt() {
-        new LookingAtBenchmark(patterns, textContent, 10).run();
+        LookingAtBenchmark lookingAtBenchmark = new LookingAtBenchmark(patterns, textContent, 10);
+        lookingAtBenchmark.run(true);
+        lookingAtBenchmark.run(false);
     }
 }

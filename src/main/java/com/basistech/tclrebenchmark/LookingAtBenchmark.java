@@ -19,7 +19,6 @@ import com.basistech.tclre.RePattern;
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.Histogram;
 import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.Timer;
 import org.mpierce.metrics.reservoir.hdrhistogram.HdrHistogramReservoir;
 
 import java.util.List;
@@ -47,7 +46,7 @@ public class LookingAtBenchmark {
         metrics.register("lookingAt", times);
     }
 
-    public void run() {
+    public void run(boolean warmup) {
         startReport();
         for (int x = 0; x < count; x++) {
             for (RePattern pattern : patterns) {
@@ -60,7 +59,19 @@ public class LookingAtBenchmark {
                         matcher.lookingAt();
                     } finally {
                         long time = System.nanoTime() - startTime;
-                        times.update(time);
+                        /*
+                        if (time > 8847359) {
+                            System.out.println(time);
+                            System.out.println("----------");
+                            System.out.println(pattern.pattern());
+                            System.out.println("----------");
+                            System.out.println(text.substring(start, end));
+                            System.out.println("----------");
+                        }
+                        */
+                        if (!warmup) {
+                            times.update(time);
+                        }
                     }
                 }
             }
