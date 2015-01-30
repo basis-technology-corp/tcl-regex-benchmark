@@ -47,7 +47,9 @@ public class LookingAtBenchmark {
     }
 
     public void run(boolean warmup) {
-        startReport();
+        if (!warmup) {
+            startReport();
+        }
         for (int x = 0; x < count; x++) {
             for (RePattern pattern : patterns) {
                 ReMatcher matcher = pattern.matcher(text);
@@ -76,7 +78,9 @@ public class LookingAtBenchmark {
                 }
             }
         }
-        stopReport();
+        if (!warmup) {
+            stopReport();
+        }
     }
 
     private void stopReport() {
